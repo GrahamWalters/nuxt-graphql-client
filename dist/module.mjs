@@ -403,9 +403,9 @@ const module = defineNuxtModule({
         "const config = " + JSON.stringify(config.clients),
         "const ops = " + JSON.stringify(ctx.clientOps),
         "const clients = {}",
-        "const useGql = (op, variables = undefined) => {",
+        "const useGql = (op, ...params) => {",
         " const client = Object.keys(ops).find(k => ops[k].includes(op))",
-        " return clientSdks[client](clients?.[client])[op](variables)",
+        " return clientSdks[client](clients?.[client])[op](...params)",
         "}",
         ctx.fns?.map((fn) => `export const ${config.functionPrefix + upperFirst(fn)} = (...params) => useGql('${fn}', ...params)`).join("\n"),
         "export default { clients, config }"
